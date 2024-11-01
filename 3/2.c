@@ -2,74 +2,79 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define MAX_SIZE 100
+#define MAX_LENGTH 100
 
-void clear_input_buffer();
+void print_array(int arr[], int length);
+void clear_input();
 
 int main() {
-    int arr[MAX_SIZE], size;
+    int arr[MAX_LENGTH], length;
 
     srand(time(0));
 
     do {
         printf("Enter the number of elements in the array (max %d): ",
-               MAX_SIZE);
-        if (scanf("%d", &size) != 1 || size < 1 || size > MAX_SIZE) {
+               MAX_LENGTH);
+        if (scanf("%d", &length) != 1 || length < 1 || length > MAX_LENGTH) {
             printf("Invalid size! Please enter a valid integer between 1 and "
                    "%d.\n\n",
-                   MAX_SIZE);
-            clear_input_buffer();
+                   MAX_LENGTH);
+            clear_input();
         }
-    } while (size < 1 || size > MAX_SIZE);
+    } while (length < 1 || length > MAX_LENGTH);
 
     int choice;
     do {
-        printf("Choose input method:\n");
-        printf("1. Enter numbers manually\n");
-        printf("2. Fill the array with random numbers\n");
+        puts("Choose input method:");
+        puts("1. Enter numbers manually");
+        puts("2. Fill the array with random numbers");
         printf("Enter your choice (1 or 2): ");
         if (scanf("%d", &choice) != 1 || (choice != 1 && choice != 2)) {
-            printf("Invalid choice! Please enter 1 or 2.\n\n");
-            clear_input_buffer();
+            puts("Invalid choice! Please enter 1 or 2.\n");
+            clear_input();
         }
     } while (choice != 1 && choice != 2);
 
     if (choice == 1) {
-        printf("\nEnter %d elements:\n", size);
-        for (int i = 0; i < size; i++) {
+        printf("\nEnter %d elements:\n", length);
+        for (int i = 0; i < length; i++) {
             while (1) {
                 printf("Element [%d]: ", i + 1);
                 if (scanf("%d", &arr[i]) != 1) {
-                    printf("Invalid input! Please enter a valid number.\n\n");
-                    clear_input_buffer();
+                    puts("Invalid input! Please enter a valid number.\n");
+                    clear_input();
                 } else
                     break;
             }
         }
     } else {
-        printf("\nArray filled with random numbers: \n[ ");
-        for (int i = 0; i < size; i++) {
-            arr[i] =
-                (int)((rand() / (RAND_MAX + 1.0)) * (2 * MAX_SIZE) - MAX_SIZE);
-            printf("%d ", arr[i]);
+        for (int i = 0; i < length; i++) {
+            arr[i] = arr[i] = rand() % (2 * MAX_LENGTH) - MAX_LENGTH;
         }
-        printf("]\n");
     }
 
+    puts("\nArray:");
+    print_array(arr, length);
+
     int last_even_idx = -1;
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < length; i++)
         if (arr[i] % 2 == 0)
             last_even_idx = i;
 
     if (last_even_idx != -1)
-        size = last_even_idx + 1;
+        length = last_even_idx + 1;
 
-    printf("\nArray after deleting elements after the last even one:\n[ ");
-    for (int i = 0; i < size; i++) printf("%d ", arr[i]);
+    puts("\nArray after deleting elements after the last even one:");
+    print_array(arr, length);
+}
+
+void print_array(int arr[], int length) {
+    printf("[ ");
+    for (int i = 0; i < length; i++) printf("%d ", arr[i]);
     printf("]\n");
 }
 
-void clear_input_buffer() {
+void clear_input() {
     char c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
