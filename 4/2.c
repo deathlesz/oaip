@@ -4,17 +4,14 @@
 
 #define MAX_SIZE 100
 
-int get_int_in_bounds(const char *prompt, const int min, const int max);
+int get_int_in_bounds(const char *prompt, int min, int max);
 int ask_input_method();
-void input_matrix(double matrix[MAX_SIZE][MAX_SIZE], const int rows,
-                  const int columns);
-void fill_randomly(double matrix[MAX_SIZE][MAX_SIZE], const int rows,
-                   const int columns);
-int check_rows(const double matrix[MAX_SIZE][MAX_SIZE], const int rows,
-               const int columns);
-void print_matrix(const double matrix[MAX_SIZE][MAX_SIZE], const int rows,
-                  const int columns);
-void zero_array(int arr[], const int size);
+void input_matrix(double matrix[MAX_SIZE][MAX_SIZE], int rows, int columns);
+void fill_randomly(double matrix[MAX_SIZE][MAX_SIZE], int rows, int columns);
+int check_rows(const double matrix[MAX_SIZE][MAX_SIZE], int rows, int columns);
+void print_matrix(const double matrix[MAX_SIZE][MAX_SIZE], int rows,
+                  int columns);
+void zero_array(int arr[], int size);
 void clear_input();
 
 int main() {
@@ -22,14 +19,14 @@ int main() {
 
     srand(time(NULL));
 
-    const int rows = get_int_in_bounds(
+    int rows = get_int_in_bounds(
         "Enter the number of rows in the matrix (%d <= r <= %d): ", 1,
         MAX_SIZE);
-    const int columns = get_int_in_bounds(
+    int columns = get_int_in_bounds(
         "Enter the number of columns in the matrix (%d <= c <= %d): ", 1,
         MAX_SIZE);
 
-    const int method = ask_input_method();
+    int method = ask_input_method();
     if (method == 1)
         input_matrix(matrix, rows, columns);
     else
@@ -53,13 +50,12 @@ int ask_input_method() {
     puts("1. Enter numbers manually");
     puts("2. Fill the matrix with random numbers");
 
-    const int method = get_int_in_bounds("Enter your choice (1 or 2): ", 1, 2);
+    int method = get_int_in_bounds("Enter your choice (1 or 2): ", 1, 2);
 
     return method;
 }
 
-void input_matrix(double matrix[MAX_SIZE][MAX_SIZE], const int rows,
-                  const int columns) {
+void input_matrix(double matrix[MAX_SIZE][MAX_SIZE], int rows, int columns) {
     for (int i = 0; i < rows; i++)
         for (int j = 0; j < columns; j++)
             if (scanf("%lf", &matrix[i][j]) != 1) {
@@ -71,16 +67,14 @@ void input_matrix(double matrix[MAX_SIZE][MAX_SIZE], const int rows,
             }
 }
 
-void fill_randomly(double matrix[MAX_SIZE][MAX_SIZE], const int rows,
-                   const int columns) {
+void fill_randomly(double matrix[MAX_SIZE][MAX_SIZE], int rows, int columns) {
     for (int i = 0; i < rows; i++)
         for (int j = 0; j < columns; j++)
             matrix[i][j] =
                 (rand() / (RAND_MAX + 1.0)) * (2 * MAX_SIZE) - MAX_SIZE;
 }
 
-int check_rows(const double matrix[MAX_SIZE][MAX_SIZE], const int rows,
-               const int columns) {
+int check_rows(const double matrix[MAX_SIZE][MAX_SIZE], int rows, int columns) {
     int rows_contain_positive[rows];
     zero_array(rows_contain_positive, rows);
 
@@ -98,15 +92,15 @@ int check_rows(const double matrix[MAX_SIZE][MAX_SIZE], const int rows,
     return 1;
 }
 
-void print_matrix(const double matrix[MAX_SIZE][MAX_SIZE], const int rows,
-                  const int columns) {
+void print_matrix(const double matrix[MAX_SIZE][MAX_SIZE], int rows,
+                  int columns) {
     int widths[columns];
     zero_array(widths, columns);
 
     for (int i = 0; i < rows; i++)
         for (int j = 0; j < columns; j++) {
             // we're getting the width of the number as if it was printed
-            const int width = snprintf(NULL, 0, "%.2lf", matrix[i][j]);
+            int width = snprintf(NULL, 0, "%.2lf", matrix[i][j]);
             if (width > widths[j])
                 widths[j] = width;
         }
@@ -118,7 +112,7 @@ void print_matrix(const double matrix[MAX_SIZE][MAX_SIZE], const int rows,
     }
 }
 
-int get_int_in_bounds(const char *prompt, const int min, const int max) {
+int get_int_in_bounds(const char *prompt, int min, int max) {
     int result = 0;
 
     do {
@@ -134,7 +128,7 @@ int get_int_in_bounds(const char *prompt, const int min, const int max) {
     return result;
 }
 
-void zero_array(int arr[], const int size) {
+void zero_array(int arr[], int size) {
     for (int i = 0; i < size; i++) arr[i] = 0;
 }
 
