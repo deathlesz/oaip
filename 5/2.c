@@ -29,7 +29,7 @@ int main() {
 
     for (int i = 0; i < rows; i++) {
         if (i < sizes[i])
-            matrix_remove(matrix, sizes, i, sizes[i] - i - 1);
+            matrix_remove(&matrix, sizes, i, sizes[i] - i - 1);
     }
 
     puts("\nMatrix after deleting elements on antidiagonal:");

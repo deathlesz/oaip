@@ -28,7 +28,7 @@ int main() {
 
     for (int i = 0; i < size; i++) {
         if (vec[i] - (int)vec[i] == 0) {
-            vec_pop(vec, &size, i);
+            vec_pop(&vec, &size, i);
             i--;
         }
     }

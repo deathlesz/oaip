@@ -29,7 +29,7 @@ int main() {
 
     for (int i = 1; i < rows; i += 2) {
         for (int j = 0; j < sizes[i]; j++) {
-            if ((int)matrix[i][j] % 2 == 0) {
+            if ((int)matrix[i][j] % 2 != 0) {
                 matrix_insert(&matrix, &rows, &sizes, &capacities, i, j,
                               matrix[i][j]);
                 j++;

@@ -20,10 +20,19 @@ void vec_push(double **vec, int *length, int *capacity, double value) {
     (*vec)[(*length)++] = value;
 }
 
-void vec_pop(double *vector, int *length, int index) {
-    for (int i = index; i < *length - 1; i++) vector[i] = vector[i + 1];
+void vec_pop(double **vector, int *length, int index) {
+    for (int i = index; i < *length - 1; i++) (*vector)[i] = (*vector)[i + 1];
 
     (*length)--;
+    if (*length != 0) {
+        double *new_vec = realloc(*vector, *length);
+
+        if (!new_vec) {
+            exit_oom();
+        }
+
+        *vector = new_vec;
+    }
 }
 
 void vec_print(const double *vector, int length) {

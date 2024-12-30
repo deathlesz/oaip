@@ -84,12 +84,20 @@ void matrix_insert(double ***matrix, int *rows, int **sizes, int **capacities,
     (*matrix)[row][column] = value;
 }
 
-void matrix_remove(double **matrix, int *sizes, int row, int column) {
+void matrix_remove(double ***matrix, int *sizes, int row, int column) {
     for (int i = column; i < sizes[row] - 1; i++) {
         matrix[row][i] = matrix[row][i + 1];
     }
 
     sizes[row]--;
+    if (sizes[row] != 0) {
+        double **new_matrix = realloc(*matrix, sizeof(double *));
+
+        if (!new_matrix)
+            exit_oom();
+
+        *matrix = new_matrix;
+    }
 }
 
 void matrix_print(double **matrix, int rows, int *sizes, const char *fmtc,
